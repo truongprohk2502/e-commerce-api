@@ -4,6 +4,7 @@ import {
   ExecutionContext,
   CallHandler,
 } from '@nestjs/common';
+import { instanceToPlain } from 'class-transformer';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -23,12 +24,15 @@ export class TransformInterceptor<T>
     next: CallHandler,
   ): Observable<Response<T>> {
     return next.handle().pipe(
-      map((data) => ({
-        success: true,
-        statusCode: context.switchToHttp().getResponse().statusCode,
-        message: 'Fulfilled',
-        data,
-      })),
+      map((data) => {
+        const transformedData: any = instanceToPlain(data);
+        return {
+          success: true,
+          statusCode: context.switchToHttp().getResponse().statusCode,
+          message: 'Fulfilled',
+          data: transformedData,
+        };
+      }),
     );
   }
 }

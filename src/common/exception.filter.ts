@@ -7,6 +7,12 @@ import {
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
 
+interface IErrorResponse {
+  statusCode: number;
+  message: string | string[];
+  error: string;
+}
+
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
   constructor(private readonly httpAdapterHost: HttpAdapterHost) {}
@@ -20,11 +26,15 @@ export class AllExceptionsFilter implements ExceptionFilter {
       exception instanceof HttpException
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
-    const errorMessage =
-      exception instanceof HttpException
-        ? exception.message
-        : 'Internal server error';
 
+    let errorMessage;
+
+    if (exception instanceof HttpException) {
+      const response = exception.getResponse() as IErrorResponse;
+      errorMessage = response.message;
+    } else {
+      errorMessage = 'Internal server error';
+    }
     const responseBody = {
       success: false,
       statusCode: httpStatus,
