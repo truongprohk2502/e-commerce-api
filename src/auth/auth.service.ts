@@ -9,12 +9,16 @@ import { compare, genSaltSync, hash } from 'bcrypt';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
 import { LoginUserDto } from './dto/login-user.dto';
+import { GoogleService } from './google.service';
+import { LoginGoogleDto } from './dto/login-google.dto';
+import { AccountType } from 'src/enums/account-type.enum';
 
 @Injectable()
 export class AuthService {
   constructor(
     private jwtService: JwtService,
     private usersService: UsersService,
+    private googleService: GoogleService,
   ) {}
 
   async generateJwtToken(email: string) {
@@ -58,5 +62,25 @@ export class AuthService {
     const token = await this.generateJwtToken(email_address);
 
     return { token, user_info: existedUser };
+  }
+
+  async loginGoogle(loginGoogleDto: LoginGoogleDto) {
+    const googleInfo = await this.googleService.getGoogleInfo(
+      loginGoogleDto.id_token,
+    );
+    const { email_address } = googleInfo;
+
+    const existedUser = await this.usersService.findByEmail(
+      email_address,
+      AccountType.UsingGoogle,
+    );
+    const token = await this.generateJwtToken(email_address);
+
+    if (existedUser) {
+      return { token, user_info: existedUser };
+    } else {
+      const createdUser = await this.usersService.createGoogle(googleInfo);
+      return { token, user_info: createdUser };
+    }
   }
 }

@@ -22,19 +22,20 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     const ctx = host.switchToHttp();
 
-    const httpStatus =
-      exception instanceof HttpException
-        ? exception.getStatus()
-        : HttpStatus.INTERNAL_SERVER_ERROR;
-
+    let httpStatus: number;
     let errorMessage;
 
     if (exception instanceof HttpException) {
-      const response = exception.getResponse() as IErrorResponse;
-      errorMessage = response.message;
+      httpStatus = exception.getStatus();
+      errorMessage = (exception.getResponse() as IErrorResponse).message;
+    } else if (exception instanceof Error) {
+      httpStatus = HttpStatus.BAD_REQUEST;
+      errorMessage = exception.message;
     } else {
+      httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
       errorMessage = 'Internal server error';
     }
+
     const responseBody = {
       success: false,
       statusCode: httpStatus,

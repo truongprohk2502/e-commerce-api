@@ -1,4 +1,5 @@
 import { Exclude } from 'class-transformer';
+import { AccountType } from 'src/enums/account-type.enum';
 import { Role } from 'src/enums/role.enum';
 import {
   Entity,
@@ -25,10 +26,10 @@ export class UserEntity {
   @Column()
   last_name: string;
 
-  @Column()
+  @Column({ nullable: true })
   phone_number: string;
 
-  @Column()
+  @Column({ nullable: true })
   @Exclude()
   password: string;
 
@@ -38,6 +39,14 @@ export class UserEntity {
   @Column({ type: 'enum', enum: Role, default: Role.User })
   @Exclude()
   role: Role;
+
+  @Column({
+    type: 'enum',
+    enum: AccountType,
+    default: AccountType.UsingPassword,
+  })
+  @Exclude()
+  account_type: AccountType;
 
   @Column({ default: true })
   @Exclude()

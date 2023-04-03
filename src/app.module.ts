@@ -21,7 +21,7 @@ import { UsersModule } from './users/users.module';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
     AuthModule,
     UsersModule,
   ],

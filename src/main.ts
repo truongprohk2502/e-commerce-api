@@ -6,9 +6,12 @@ import { HttpAdapterHost } from '@nestjs/core';
 import { TransformInterceptor } from './common/transform.interceptor';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  const configService = app.get(ConfigService);
 
   const config = new DocumentBuilder()
     .setTitle('E-commerce API')
@@ -32,7 +35,7 @@ async function bootstrap() {
 
   app.useGlobalInterceptors(new TransformInterceptor());
 
-  await app.listen(3000);
+  await app.listen(configService.get('PORT') || 8000);
 }
 
 bootstrap();

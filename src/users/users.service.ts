@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
+import { CreateGoogleDto } from './dto/create-google.dto';
+import { AccountType } from 'src/enums/account-type.enum';
 
 @Injectable()
 export class UsersService {
@@ -16,9 +18,18 @@ export class UsersService {
     return this.usersRepository.save(user);
   }
 
-  async findByEmail(email: string) {
+  async createGoogle(createGoogleDto: CreateGoogleDto) {
+    const user = this.usersRepository.create({
+      ...createGoogleDto,
+      account_type: AccountType.UsingGoogle,
+    });
+    return this.usersRepository.save(user);
+  }
+
+  async findByEmail(email: string, accountType?: AccountType) {
     return this.usersRepository.findOneBy({
       email_address: email,
+      account_type: accountType || AccountType.UsingPassword,
       is_active: true,
     });
   }
