@@ -1,4 +1,4 @@
-export class CreateGoogleDto {
+export class CreateFacebookDto {
   email_address: string;
   first_name: string;
   last_name: string;

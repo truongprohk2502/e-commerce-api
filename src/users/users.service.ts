@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { CreateGoogleDto } from './dto/create-google.dto';
 import { AccountType } from 'src/enums/account-type.enum';
+import { CreateFacebookDto } from './dto/create-facebook.dto';
 
 @Injectable()
 export class UsersService {
@@ -22,6 +23,14 @@ export class UsersService {
     const user = this.usersRepository.create({
       ...createGoogleDto,
       account_type: AccountType.UsingGoogle,
+    });
+    return this.usersRepository.save(user);
+  }
+
+  async createFacebook(createFacebookDto: CreateFacebookDto) {
+    const user = this.usersRepository.create({
+      ...createFacebookDto,
+      account_type: AccountType.UsingFacebook,
     });
     return this.usersRepository.save(user);
   }

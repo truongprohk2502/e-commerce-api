@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
@@ -12,6 +12,7 @@ import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { AuthenticationSwagger } from './swaggers/authentication.swagger';
 import { LoginGoogleDto } from './dto/login-google.dto';
+import { LoginFacebookDto } from './dto/login-facebook.dto';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -55,5 +56,15 @@ export class AuthController {
   })
   async loginGoogle(@Body() loginGoogleDto: LoginGoogleDto) {
     return this.authService.loginGoogle(loginGoogleDto);
+  }
+
+  @Post('/login-facebook')
+  @ApiOperation({ summary: 'Login with facebook account' })
+  @ApiCreatedResponse({
+    description: 'Login successfully',
+    schema: AuthenticationSwagger,
+  })
+  async loginFacebook(@Body() loginFacebookDto: LoginFacebookDto) {
+    return this.authService.loginFacebook(loginFacebookDto);
   }
 }

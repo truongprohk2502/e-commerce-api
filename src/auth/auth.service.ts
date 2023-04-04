@@ -12,6 +12,8 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { GoogleService } from './google.service';
 import { LoginGoogleDto } from './dto/login-google.dto';
 import { AccountType } from 'src/enums/account-type.enum';
+import { FacebookService } from './facebook.service';
+import { LoginFacebookDto } from './dto/login-facebook.dto';
 
 @Injectable()
 export class AuthService {
@@ -19,6 +21,7 @@ export class AuthService {
     private jwtService: JwtService,
     private usersService: UsersService,
     private googleService: GoogleService,
+    private facebookService: FacebookService,
   ) {}
 
   async generateJwtToken(email: string) {
@@ -80,6 +83,27 @@ export class AuthService {
       return { token, user_info: existedUser };
     } else {
       const createdUser = await this.usersService.createGoogle(googleInfo);
+      return { token, user_info: createdUser };
+    }
+  }
+
+  async loginFacebook(loginFacebookDto: LoginFacebookDto) {
+    const facebookInfo = await this.facebookService.getFacebookInfo(
+      loginFacebookDto.access_token,
+    );
+
+    const { email_address } = facebookInfo;
+
+    const existedUser = await this.usersService.findByEmail(
+      email_address,
+      AccountType.UsingFacebook,
+    );
+    const token = await this.generateJwtToken(email_address);
+
+    if (existedUser) {
+      return { token, user_info: existedUser };
+    } else {
+      const createdUser = await this.usersService.createFacebook(facebookInfo);
       return { token, user_info: createdUser };
     }
   }

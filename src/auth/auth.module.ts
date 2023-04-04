@@ -7,6 +7,8 @@ import { ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './jwt.strategy';
 import { UsersModule } from 'src/users/users.module';
 import { GoogleService } from './google.service';
+import { FacebookService } from './facebook.service';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
@@ -19,8 +21,9 @@ import { GoogleService } from './google.service';
       inject: [ConfigService],
     }),
     UsersModule,
+    HttpModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, GoogleService, JwtStrategy],
+  providers: [AuthService, GoogleService, FacebookService, JwtStrategy],
 })
 export class AuthModule {}

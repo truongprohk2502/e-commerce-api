@@ -23,7 +23,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
 
     let httpStatus: number;
-    let errorMessage;
+    let errorMessage: string | string[];
 
     if (exception instanceof HttpException) {
       httpStatus = exception.getStatus();
