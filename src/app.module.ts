@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { UsersModule } from './users/users.module';
+import { CountriesModule } from './countries/countries.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { UsersModule } from './users/users.module';
     ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
     AuthModule,
     UsersModule,
+    CountriesModule,
   ],
 })
 export class AppModule {}

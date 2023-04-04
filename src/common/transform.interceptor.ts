@@ -30,7 +30,7 @@ export class TransformInterceptor<T>
           success: true,
           statusCode: context.switchToHttp().getResponse().statusCode,
           message: 'Fulfilled',
-          data: transformedData,
+          data: transformedData || null,
         };
       }),
     );

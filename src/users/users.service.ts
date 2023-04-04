@@ -4,7 +4,7 @@ import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { CreateGoogleDto } from './dto/create-google.dto';
-import { AccountType } from 'src/enums/account-type.enum';
+import { AccountType } from 'src/common/enums/account-type.enum';
 import { CreateFacebookDto } from './dto/create-facebook.dto';
 
 @Injectable()

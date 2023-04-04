@@ -11,7 +11,7 @@ import { UsersService } from 'src/users/users.service';
 import { LoginUserDto } from './dto/login-user.dto';
 import { GoogleService } from './google.service';
 import { LoginGoogleDto } from './dto/login-google.dto';
-import { AccountType } from 'src/enums/account-type.enum';
+import { AccountType } from 'src/common/enums/account-type.enum';
 import { FacebookService } from './facebook.service';
 import { LoginFacebookDto } from './dto/login-facebook.dto';
 

@@ -1,6 +1,6 @@
 import { Exclude } from 'class-transformer';
-import { AccountType } from 'src/enums/account-type.enum';
-import { Role } from 'src/enums/role.enum';
+import { AccountType } from 'src/common/enums/account-type.enum';
+import { Role } from 'src/common/enums/role.enum';
 import {
   Entity,
   Column,
