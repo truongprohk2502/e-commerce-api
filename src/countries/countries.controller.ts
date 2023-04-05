@@ -29,7 +29,7 @@ import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from 'src/common/enums/role.enum';
 
 @Controller('countries')
-@Roles(Role.User)
+@Roles(Role.Admin)
 @ApiTags('countries')
 export class CountriesController {
   constructor(private countriesService: CountriesService) {}
@@ -44,7 +44,7 @@ export class CountriesController {
     description: 'Country not found',
   })
   async findById(@Param('id', ParseIntPipe) id: number) {
-    return this.countriesService.findById(id);
+    return this.countriesService.findByIdOrFail(id);
   }
 
   @Get('/')

@@ -17,6 +17,10 @@ export class CountriesService {
   ) {}
 
   async findById(id: number) {
+    return this.countriesRepository.findOneBy({ id });
+  }
+
+  async findByIdOrFail(id: number) {
     return this.countriesRepository.findOneByOrFail({ id });
   }
 
