@@ -16,7 +16,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('E-commerce API')
     .setDescription('The API documentations of E-commerce application')
-    .addCookieAuth()
+    .addCookieAuth('jwt')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

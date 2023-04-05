@@ -5,5 +5,5 @@ export class DeleteCountryDto {
   @IsInt({ each: true })
   @ArrayNotEmpty()
   @ApiProperty({ example: [1] })
-  country_ids: string[];
+  country_ids: number[];
 }

@@ -25,8 +25,11 @@ import { PaginationDto } from 'src/common/pagination.dto';
 import { getPaginateSwaggerFormat } from 'src/common/utils/getPaginateSwaggerFormat';
 import { UpdateCountryDto } from './dto/update-country.dto';
 import { DeleteCountryDto } from './dto/delete-country.dto';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { Role } from 'src/common/enums/role.enum';
 
 @Controller('countries')
+@Roles(Role.User)
 @ApiTags('countries')
 export class CountriesController {
   constructor(private countriesService: CountriesService) {}
