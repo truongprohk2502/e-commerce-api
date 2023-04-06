@@ -7,6 +7,7 @@ import { join } from 'path';
 import { UsersModule } from './users/users.module';
 import { CountriesModule } from './countries/countries.module';
 import { AddressesModule } from './addresses/addresses.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { AddressesModule } from './addresses/addresses.module';
     UsersModule,
     CountriesModule,
     AddressesModule,
+    CategoriesModule,
   ],
 })
 export class AppModule {}

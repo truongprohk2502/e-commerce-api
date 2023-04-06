@@ -30,9 +30,9 @@ export class CreateAddressDto {
   @IsBoolean()
   @IsOptional()
   @ApiProperty({ example: true })
-  is_default: boolean;
+  is_default?: boolean;
 
   @IsInt()
-  @ApiProperty({ example: 2 })
-  country_id: number;
+  @ApiProperty({ example: 1 })
+  fk_country_id: number;
 }

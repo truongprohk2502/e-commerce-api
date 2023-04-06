@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AddressEntity } from './entities/address.entity';
 import { Repository } from 'typeorm';
@@ -29,12 +25,12 @@ export class AddressesService {
   }
 
   async create(createAddressDto: CreateAddressDto, payload: IJwtPayload) {
-    const { country_id, ...props } = createAddressDto;
-
-    const country = await this.countriesService.findById(country_id);
+    const country = await this.countriesService.findById(
+      createAddressDto.fk_country_id,
+    );
     if (!country) throw new BadRequestException('Country not found');
 
-    const address = this.addressesRepository.create({ ...props });
+    const address = this.addressesRepository.create(createAddressDto);
     address.country = country;
     address.fk_user_id = payload.id;
 

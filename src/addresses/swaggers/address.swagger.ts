@@ -35,6 +35,14 @@ export const AddressSwagger = {
       type: 'string',
       example: false,
     },
+    fk_country_id: {
+      type: 'number',
+      example: 1,
+    },
+    fk_user_id: {
+      type: 'number',
+      example: 1,
+    },
     country: CountrySwagger,
   },
 };
