@@ -20,6 +20,10 @@ import { AddressSwagger } from './swaggers/address.swagger';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from 'src/common/enums/role.enum';
 import { UpdateAddressDto } from './dto/update-address.dto';
+import {
+  IJwtPayload,
+  JwtPayload,
+} from 'src/common/decorators/jwt-payload.decorator';
 
 @Controller('addresses')
 @ApiTags('addresses')
@@ -34,8 +38,11 @@ export class AddressesController {
     schema: AddressSwagger,
   })
   @ApiBadRequestResponse({ description: 'Country not found' })
-  async create(@Body() createAddressDto: CreateAddressDto) {
-    return this.addressesService.create(createAddressDto);
+  async create(
+    @Body() createAddressDto: CreateAddressDto,
+    @JwtPayload() payload: IJwtPayload,
+  ) {
+    return this.addressesService.create(createAddressDto, payload);
   }
 
   @Patch('/:id')
@@ -49,8 +56,9 @@ export class AddressesController {
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateAddressDto: UpdateAddressDto,
+    @JwtPayload() payload: IJwtPayload,
   ) {
-    return this.addressesService.update(id, updateAddressDto);
+    return this.addressesService.update(id, updateAddressDto, payload);
   }
 
   @Delete('/:id')

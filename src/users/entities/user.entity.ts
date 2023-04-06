@@ -1,4 +1,5 @@
 import { Exclude } from 'class-transformer';
+import { AddressEntity } from 'src/addresses/entities/address.entity';
 import { AccountType } from 'src/common/enums/account-type.enum';
 import { Role } from 'src/common/enums/role.enum';
 import {
@@ -9,6 +10,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Index,
+  OneToMany,
 } from 'typeorm';
 
 @Entity('users')
@@ -51,6 +53,9 @@ export class UserEntity {
   @Column({ default: true })
   @Exclude()
   is_active: boolean;
+
+  @OneToMany(() => AddressEntity, (address) => address.user)
+  addresses: AddressEntity[];
 
   @CreateDateColumn()
   @Exclude()

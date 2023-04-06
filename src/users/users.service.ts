@@ -42,4 +42,8 @@ export class UsersService {
       is_active: true,
     });
   }
+
+  async findById(id: number) {
+    return this.usersRepository.findOneBy({ id });
+  }
 }

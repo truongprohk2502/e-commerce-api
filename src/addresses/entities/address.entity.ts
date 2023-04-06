@@ -1,5 +1,6 @@
 import { Exclude } from 'class-transformer';
 import { CountryEntity } from 'src/countries/entities/country.entity';
+import { UserEntity } from 'src/users/entities/user.entity';
 import {
   Entity,
   Column,
@@ -9,6 +10,8 @@ import {
   DeleteDateColumn,
   OneToOne,
   JoinColumn,
+  ManyToOne,
+  RelationId,
 } from 'typeorm';
 
 @Entity('addresses')
@@ -34,9 +37,22 @@ export class AddressEntity {
   @Column()
   postal_code: string;
 
+  @Column()
+  @RelationId((addressEntity: AddressEntity) => addressEntity.country)
+  fk_country_id: number;
+
   @OneToOne(() => CountryEntity, { eager: true, cascade: true })
-  @JoinColumn({ name: 'country_id' })
+  @JoinColumn({ name: 'fk_country_id' })
   country: CountryEntity;
+
+  @Column()
+  @RelationId((addressEntity: AddressEntity) => addressEntity.user)
+  fk_user_id: number;
+
+  @ManyToOne(() => UserEntity, (user) => user.addresses)
+  @JoinColumn({ name: 'fk_user_id' })
+  @Exclude()
+  user: UserEntity;
 
   @CreateDateColumn()
   @Exclude()

@@ -14,6 +14,8 @@ import { LoginGoogleDto } from './dto/login-google.dto';
 import { AccountType } from 'src/common/enums/account-type.enum';
 import { FacebookService } from './facebook.service';
 import { LoginFacebookDto } from './dto/login-facebook.dto';
+import { IJwtPayload } from 'src/common/decorators/jwt-payload.decorator';
+import { Role } from 'src/common/enums/role.enum';
 
 @Injectable()
 export class AuthService {
@@ -24,11 +26,11 @@ export class AuthService {
     private facebookService: FacebookService,
   ) {}
 
-  async generateJwtToken(email: string) {
-    return this.jwtService.signAsync({ email, role: 'user' });
+  private async generateJwtToken(payload: IJwtPayload) {
+    return this.jwtService.signAsync(payload);
   }
 
-  async generateHashPassword(password: string) {
+  private async generateHashPassword(password: string) {
     return hash(password, genSaltSync());
   }
 
@@ -46,7 +48,11 @@ export class AuthService {
       password: hashPass,
     });
 
-    const token = await this.generateJwtToken(email_address);
+    const token = await this.generateJwtToken({
+      id: createdUser.id,
+      email_address,
+      role: Role.User,
+    });
 
     return { token, user_info: createdUser };
   }
@@ -62,7 +68,11 @@ export class AuthService {
     if (!isCorrectPassword)
       throw new BadRequestException('The password is incorrect');
 
-    const token = await this.generateJwtToken(email_address);
+    const token = await this.generateJwtToken({
+      id: existedUser.id,
+      email_address,
+      role: existedUser.role,
+    });
 
     return { token, user_info: existedUser };
   }
@@ -77,7 +87,11 @@ export class AuthService {
       email_address,
       AccountType.UsingGoogle,
     );
-    const token = await this.generateJwtToken(email_address);
+    const token = await this.generateJwtToken({
+      id: existedUser.id,
+      email_address,
+      role: Role.User,
+    });
 
     if (existedUser) {
       return { token, user_info: existedUser };
@@ -98,7 +112,11 @@ export class AuthService {
       email_address,
       AccountType.UsingFacebook,
     );
-    const token = await this.generateJwtToken(email_address);
+    const token = await this.generateJwtToken({
+      id: existedUser.id,
+      email_address,
+      role: Role.User,
+    });
 
     if (existedUser) {
       return { token, user_info: existedUser };
