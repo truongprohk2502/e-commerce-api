@@ -7,47 +7,37 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Index,
-  ManyToOne,
-  OneToMany,
-  JoinColumn,
-  RelationId,
   Tree,
   TreeParent,
   TreeChildren,
 } from 'typeorm';
 
 @Entity('categories')
-@Tree('nested-set')
+@Tree('closure-table')
 export class CategoryEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true })
+  @Column()
   @Index({ unique: true })
-  category_name: string;
+  categoryName: string;
 
-  @Column({ nullable: true })
-  @RelationId((categoryEntity: CategoryEntity) => categoryEntity.parent)
-  fk_parent_id: number;
-
-  @ManyToOne(() => CategoryEntity, (category) => category.children)
   @TreeParent()
-  @JoinColumn({ name: 'fk_parent_id' })
+  @Exclude()
   parent: CategoryEntity;
 
-  @OneToMany(() => CategoryEntity, (category) => category.parent)
   @TreeChildren()
   children: CategoryEntity[];
 
   @CreateDateColumn()
   @Exclude()
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
   @Exclude()
-  updated_at: Date;
+  updatedAt: Date;
 
   @DeleteDateColumn()
   @Exclude()
-  deleted_at: Date;
+  deletedAt: Date;
 }

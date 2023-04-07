@@ -13,10 +13,10 @@ export class FacebookService {
     const observable = this.httpService.get(FACEBOOK_GRAPH_API + token);
     const data = await lastValueFrom(observable);
     return {
-      email_address: data.data.email,
-      first_name: data.data.first_name,
-      last_name: data.data.last_name,
-      image_url: data.data.picture.data.url,
+      emailAddress: data.data.email,
+      firstName: data.data.first_name,
+      lastName: data.data.last_name,
+      imageUrl: data.data.picture.data.url,
     };
   }
 }

@@ -35,9 +35,9 @@ export class AuthService {
   }
 
   async register(createUserDto: CreateUserDto) {
-    const { password, email_address } = createUserDto;
+    const { password, emailAddress } = createUserDto;
 
-    const existedUser = await this.usersService.findByEmail(email_address);
+    const existedUser = await this.usersService.findByEmail(emailAddress);
     if (existedUser)
       throw new ConflictException('The email address already exists');
 
@@ -50,7 +50,7 @@ export class AuthService {
 
     const token = await this.generateJwtToken({
       id: createdUser.id,
-      email_address,
+      emailAddress,
       role: Role.User,
     });
 
@@ -58,9 +58,9 @@ export class AuthService {
   }
 
   async login(loginUserDto: LoginUserDto) {
-    const { email_address, password } = loginUserDto;
+    const { emailAddress, password } = loginUserDto;
 
-    const existedUser = await this.usersService.findByEmail(email_address);
+    const existedUser = await this.usersService.findByEmail(emailAddress);
     if (!existedUser)
       throw new NotFoundException('The email address does not exist');
 
@@ -70,26 +70,26 @@ export class AuthService {
 
     const token = await this.generateJwtToken({
       id: existedUser.id,
-      email_address,
+      emailAddress,
       role: existedUser.role,
     });
 
-    return { token, user_info: existedUser };
+    return { token, userInfo: existedUser };
   }
 
   async loginGoogle(loginGoogleDto: LoginGoogleDto) {
     const googleInfo = await this.googleService.getGoogleInfo(
-      loginGoogleDto.id_token,
+      loginGoogleDto.idToken,
     );
-    const { email_address } = googleInfo;
+    const { emailAddress } = googleInfo;
 
     const existedUser = await this.usersService.findByEmail(
-      email_address,
+      emailAddress,
       AccountType.UsingGoogle,
     );
     const token = await this.generateJwtToken({
       id: existedUser.id,
-      email_address,
+      emailAddress,
       role: Role.User,
     });
 
@@ -103,18 +103,18 @@ export class AuthService {
 
   async loginFacebook(loginFacebookDto: LoginFacebookDto) {
     const facebookInfo = await this.facebookService.getFacebookInfo(
-      loginFacebookDto.access_token,
+      loginFacebookDto.accessToken,
     );
 
-    const { email_address } = facebookInfo;
+    const { emailAddress } = facebookInfo;
 
     const existedUser = await this.usersService.findByEmail(
-      email_address,
+      emailAddress,
       AccountType.UsingFacebook,
     );
     const token = await this.generateJwtToken({
       id: existedUser.id,
-      email_address,
+      emailAddress,
       role: Role.User,
     });
 

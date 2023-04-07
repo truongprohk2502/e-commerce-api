@@ -7,6 +7,7 @@ import { CountriesService } from 'src/countries/countries.service';
 import { UpdateAddressDto } from './dto/update-address.dto';
 import { IJwtPayload } from 'src/common/decorators/jwt-payload.decorator';
 import { updateEntity } from 'src/common/utils/updateEntity';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class AddressesService {
@@ -14,6 +15,7 @@ export class AddressesService {
     @InjectRepository(AddressEntity)
     private addressesRepository: Repository<AddressEntity>,
     private countriesService: CountriesService,
+    private usersService: UsersService,
   ) {}
 
   async findById(id: number) {
@@ -26,13 +28,17 @@ export class AddressesService {
 
   async create(createAddressDto: CreateAddressDto, payload: IJwtPayload) {
     const country = await this.countriesService.findById(
-      createAddressDto.fk_country_id,
+      createAddressDto.countryId,
     );
     if (!country) throw new BadRequestException('Country not found');
 
+    const user = await this.usersService.findById(payload.id);
+    if (!user) throw new BadRequestException('User not found');
+
     const address = this.addressesRepository.create(createAddressDto);
     address.country = country;
-    address.fk_user_id = payload.id;
+
+    address.user = user;
 
     return this.addressesRepository.save(address);
   }

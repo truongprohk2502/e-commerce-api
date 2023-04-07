@@ -5,7 +5,7 @@ export const CountrySwagger = {
       type: 'number',
       example: 1,
     },
-    country_name: {
+    countryName: {
       type: 'string',
       example: 'Vietnam',
     },

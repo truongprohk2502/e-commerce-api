@@ -19,10 +19,10 @@ export class GoogleService {
     });
     const payload = ticket.getPayload();
     return {
-      email_address: payload.email,
-      first_name: payload.given_name,
-      last_name: payload.family_name,
-      image_url: payload.picture,
+      emailAddress: payload.email,
+      firstName: payload.given_name,
+      lastName: payload.family_name,
+      imageUrl: payload.picture,
     };
   }
 }

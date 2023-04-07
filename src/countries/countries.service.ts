@@ -41,8 +41,8 @@ export class CountriesService {
   }
 
   async createMultiple(createCountriesDto: CreateCountriesDto) {
-    const countries = createCountriesDto.country_names.map((country_name) =>
-      this.countriesRepository.create({ country_name }),
+    const countries = createCountriesDto.countryNames.map((countryName) =>
+      this.countriesRepository.create({ countryName }),
     );
     return this.countriesRepository.save(countries);
   }
@@ -63,6 +63,6 @@ export class CountriesService {
   }
 
   async deleteMultiple(deleteCountryDto: DeleteCountryDto) {
-    await this.countriesRepository.delete(deleteCountryDto.country_ids);
+    await this.countriesRepository.delete(deleteCountryDto.countryIds);
   }
 }

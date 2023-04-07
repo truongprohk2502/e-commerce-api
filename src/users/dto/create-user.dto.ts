@@ -9,19 +9,19 @@ import {
 export class CreateUserDto {
   @IsEmail()
   @ApiProperty({ example: 'truong@gmail.com' })
-  email_address: string;
+  emailAddress: string;
 
   @IsString()
   @ApiProperty({ example: 'truong' })
-  first_name: string;
+  firstName: string;
 
   @IsString()
   @ApiProperty({ example: 'nguyen' })
-  last_name: string;
+  lastName: string;
 
   @IsPhoneNumber('VI')
   @ApiProperty({ example: '07128937281' })
-  phone_number: string;
+  phoneNumber: string;
 
   @IsStrongPassword({
     minLength: 8,

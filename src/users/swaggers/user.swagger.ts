@@ -5,23 +5,23 @@ export const UserSwagger = {
       type: 'number',
       example: 1,
     },
-    email_address: {
+    emailAddress: {
       type: 'string',
       example: 'truong@gmail.com',
     },
-    first_name: {
+    firstName: {
       type: 'string',
       example: 'truong',
     },
-    last_name: {
+    lastName: {
       type: 'string',
       example: 'nguyen',
     },
-    phone_number: {
+    phoneNumber: {
       type: 'string',
       example: '07128937281',
     },
-    image_url: {
+    imageUrl: {
       type: 'string',
       example: '/default-user.jpg',
     },

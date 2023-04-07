@@ -9,9 +9,5 @@ export const CategorySwagger = {
       type: 'string',
       example: 'Computer',
     },
-    fk_parent_id: {
-      type: 'number',
-      example: 1,
-    },
   },
 };

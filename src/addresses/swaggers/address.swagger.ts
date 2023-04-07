@@ -7,15 +7,15 @@ export const AddressSwagger = {
       type: 'number',
       example: 1,
     },
-    unit_number: {
+    unitNumber: {
       type: 'string',
       example: '82 Floor 4',
     },
-    street_number: {
+    streetNumber: {
       type: 'string',
       example: '12A',
     },
-    street_name: {
+    streetName: {
       type: 'string',
       example: 'Hill Road',
     },
@@ -27,21 +27,13 @@ export const AddressSwagger = {
       type: 'string',
       example: 'California',
     },
-    postal_code: {
+    postalCode: {
       type: 'string',
       example: '880012',
     },
-    is_default: {
+    isDefault: {
       type: 'string',
       example: false,
-    },
-    fk_country_id: {
-      type: 'number',
-      example: 1,
-    },
-    fk_user_id: {
-      type: 'number',
-      example: 1,
     },
     country: CountrySwagger,
   },

@@ -20,23 +20,23 @@ export class UserEntity {
 
   @Column()
   @Index()
-  email_address: string;
+  emailAddress: string;
 
   @Column()
-  first_name: string;
+  firstName: string;
 
   @Column()
-  last_name: string;
+  lastName: string;
 
   @Column({ nullable: true })
-  phone_number: string;
+  phoneNumber: string;
 
   @Column({ nullable: true })
   @Exclude()
   password: string;
 
   @Column({ default: '/default-user.jpg' })
-  image_url: string;
+  imageUrl: string;
 
   @Column({ type: 'enum', enum: Role, default: Role.User })
   @Exclude()
@@ -48,24 +48,24 @@ export class UserEntity {
     default: AccountType.UsingPassword,
   })
   @Exclude()
-  account_type: AccountType;
+  accountType: AccountType;
 
   @Column({ default: true })
   @Exclude()
-  is_active: boolean;
+  isActive: boolean;
 
   @OneToMany(() => AddressEntity, (address) => address.user)
   addresses: AddressEntity[];
 
   @CreateDateColumn()
   @Exclude()
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
   @Exclude()
-  updated_at: Date;
+  updatedAt: Date;
 
   @DeleteDateColumn()
   @Exclude()
-  deleted_at: Date;
+  deletedAt: Date;
 }

@@ -5,5 +5,5 @@ export class CreateCountriesDto {
   @IsString({ each: true })
   @ArrayNotEmpty()
   @ApiProperty({ type: 'string', isArray: true, example: ['Vietnam'] })
-  country_names: string[];
+  countryNames: string[];
 }

@@ -5,15 +5,15 @@ export class CreateAddressDto {
   @IsString()
   @IsOptional()
   @ApiProperty({ example: '82 Floor 4' })
-  unit_number: string;
+  unitNumber: string;
 
   @IsString()
   @ApiProperty({ example: '12A' })
-  street_number: string;
+  streetNumber: string;
 
   @IsString()
   @ApiProperty({ example: 'Hill Road' })
-  street_name: string;
+  streetName: string;
 
   @IsString()
   @ApiProperty({ example: 'Los Angeles' })
@@ -25,14 +25,14 @@ export class CreateAddressDto {
 
   @IsString()
   @ApiProperty({ example: '880012' })
-  postal_code: string;
+  postalCode: string;
 
   @IsBoolean()
   @IsOptional()
   @ApiProperty({ example: true })
-  is_default?: boolean;
+  isDefault?: boolean;
 
   @IsInt()
   @ApiProperty({ example: 1 })
-  fk_country_id: number;
+  countryId: number;
 }

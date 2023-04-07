@@ -22,7 +22,7 @@ export class UsersService {
   async createGoogle(createGoogleDto: CreateGoogleDto) {
     const user = this.usersRepository.create({
       ...createGoogleDto,
-      account_type: AccountType.UsingGoogle,
+      accountType: AccountType.UsingGoogle,
     });
     return this.usersRepository.save(user);
   }
@@ -30,16 +30,16 @@ export class UsersService {
   async createFacebook(createFacebookDto: CreateFacebookDto) {
     const user = this.usersRepository.create({
       ...createFacebookDto,
-      account_type: AccountType.UsingFacebook,
+      accountType: AccountType.UsingFacebook,
     });
     return this.usersRepository.save(user);
   }
 
   async findByEmail(email: string, accountType?: AccountType) {
     return this.usersRepository.findOneBy({
-      email_address: email,
-      account_type: accountType || AccountType.UsingPassword,
-      is_active: true,
+      emailAddress: email,
+      accountType: accountType || AccountType.UsingPassword,
+      isActive: true,
     });
   }
 

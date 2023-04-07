@@ -1,9 +1,11 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CategoryEntity } from './entities/category.entity';
 import { Repository, TreeRepository } from 'typeorm';
 import { CreateCategoryDto } from './dto/create-category';
 import { CATEGORIES_TREE_REPOSITORY } from './providers/categories-tree-repo.provider';
+import { UpdateCategoryDto } from './dto/update-category';
+import { updateEntity } from 'src/common/utils/updateEntity';
 
 @Injectable()
 export class CategoriesService {
@@ -14,18 +16,43 @@ export class CategoriesService {
     private categoriesTreeRepository: TreeRepository<CategoryEntity>,
   ) {}
 
+  async getAll() {
+    return this.categoriesTreeRepository.findTrees();
+  }
+
   async create(createCategoryDto: CreateCategoryDto) {
-    const { fk_parent_id } = createCategoryDto;
-    if (fk_parent_id) {
-      await this.categoriesRepository.findOneByOrFail({
-        id: fk_parent_id,
-      });
-    }
+    const { parentId } = createCategoryDto;
+
     const category = this.categoriesRepository.create(createCategoryDto);
+    category.parent = parentId
+      ? await this.categoriesRepository.findOneBy({
+          id: parentId,
+        })
+      : null;
+
     return this.categoriesRepository.save(category);
   }
 
-  async getAll() {
-    return this.categoriesTreeRepository.findTrees();
+  async update(id: number, updateCategoryDto: UpdateCategoryDto) {
+    const { parentId } = updateCategoryDto;
+
+    const category = await this.categoriesRepository.findOneBy({
+      id,
+    });
+
+    if (!category) throw new NotFoundException('Category not found');
+    category.parent = parentId
+      ? await this.categoriesRepository.findOneBy({
+          id: parentId,
+        })
+      : null;
+
+    updateEntity(category, updateCategoryDto);
+
+    return this.categoriesRepository.save(category);
+  }
+
+  async deleteById(id: number) {
+    await this.categoriesRepository.delete(id);
   }
 }

@@ -1,8 +1,18 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  ParseIntPipe,
+  Delete,
+} from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
+  ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -10,6 +20,7 @@ import {
 import { CategorySwagger } from './swaggers/category.swagger';
 import { CreateCategoryDto } from './dto/create-category';
 import { NestedCategorySwagger } from './swaggers/nested-category.swagger';
+import { UpdateCategoryDto } from './dto/update-category';
 
 @Controller('categories')
 @ApiTags('categories')
@@ -38,5 +49,28 @@ export class CategoriesController {
   })
   async getAll() {
     return this.categoriesService.getAll();
+  }
+
+  @Put('/:id')
+  @ApiOperation({ summary: 'Update category' })
+  @ApiOkResponse({
+    description: 'Updated successfully',
+    schema: CategorySwagger,
+  })
+  @ApiNotFoundResponse({ description: 'Category not found' })
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateCategoryDto: UpdateCategoryDto,
+  ) {
+    return this.categoriesService.update(id, updateCategoryDto);
+  }
+
+  @Delete('/:id')
+  @ApiOperation({ summary: 'Delete category by id' })
+  @ApiOkResponse({
+    description: 'Deleted successfully',
+  })
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    return this.categoriesService.deleteById(id);
   }
 }

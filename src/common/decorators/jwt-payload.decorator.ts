@@ -3,7 +3,7 @@ import { Role } from '../enums/role.enum';
 
 export interface IJwtPayload {
   id: number;
-  email_address: string;
+  emailAddress: string;
   role: Role;
 }
 

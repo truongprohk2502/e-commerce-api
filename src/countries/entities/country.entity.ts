@@ -16,17 +16,17 @@ export class CountryEntity {
 
   @Column()
   @Index({ unique: true })
-  country_name: string;
+  countryName: string;
 
   @CreateDateColumn()
   @Exclude()
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
   @Exclude()
-  updated_at: Date;
+  updatedAt: Date;
 
   @DeleteDateColumn()
   @Exclude()
-  deleted_at: Date;
+  deletedAt: Date;
 }

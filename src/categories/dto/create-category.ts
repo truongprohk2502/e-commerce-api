@@ -4,10 +4,10 @@ import { IsInt, IsOptional, IsString } from 'class-validator';
 export class CreateCategoryDto {
   @IsString()
   @ApiProperty({ example: 'Computer' })
-  category_name: string;
+  categoryName: string;
 
   @IsInt()
   @IsOptional()
   @ApiProperty({ example: 1 })
-  fk_parent_id?: number;
+  parentId?: number;
 }

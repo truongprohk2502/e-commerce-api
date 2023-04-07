@@ -9,9 +9,8 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   OneToOne,
-  JoinColumn,
   ManyToOne,
-  RelationId,
+  JoinColumn,
 } from 'typeorm';
 
 @Entity('addresses')
@@ -20,13 +19,13 @@ export class AddressEntity {
   id: number;
 
   @Column({ nullable: true })
-  unit_number: string;
+  unitNumber: string;
 
   @Column()
-  street_number: string;
+  streetNumber: string;
 
   @Column()
-  street_name: string;
+  streetName: string;
 
   @Column()
   city: string;
@@ -35,34 +34,25 @@ export class AddressEntity {
   region: string;
 
   @Column()
-  postal_code: string;
-
-  @Column()
-  @RelationId((addressEntity: AddressEntity) => addressEntity.country)
-  fk_country_id: number;
+  postalCode: string;
 
   @OneToOne(() => CountryEntity, { eager: true, cascade: true })
-  @JoinColumn({ name: 'fk_country_id' })
+  @JoinColumn()
   country: CountryEntity;
 
-  @Column()
-  @RelationId((addressEntity: AddressEntity) => addressEntity.user)
-  fk_user_id: number;
-
   @ManyToOne(() => UserEntity, (user) => user.addresses)
-  @JoinColumn({ name: 'fk_user_id' })
   @Exclude()
   user: UserEntity;
 
   @CreateDateColumn()
   @Exclude()
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
   @Exclude()
-  updated_at: Date;
+  updatedAt: Date;
 
   @DeleteDateColumn()
   @Exclude()
-  deleted_at: Date;
+  deletedAt: Date;
 }
