@@ -23,9 +23,15 @@ import { DeleteRoute } from 'src/common/decorators/delete-route.decorator';
 
 @Controller('categories')
 @ApiTags('categories')
-// @Roles(Role.Admin)
+@Roles(Role.Admin)
 export class CategoriesController {
   constructor(private categoriesService: CategoriesService) {}
+
+  @Get('/')
+  @GetAllRoute({ name: 'categories', schema: NestedCategorySwagger })
+  async getAll() {
+    return this.categoriesService.getAll();
+  }
 
   @Post('/')
   @CreateRoute({
@@ -38,14 +44,13 @@ export class CategoriesController {
     return this.categoriesService.create(createCategoryDto);
   }
 
-  @Get('/')
-  @GetAllRoute({ name: 'categories', schema: NestedCategorySwagger })
-  async getAll() {
-    return this.categoriesService.getAll();
-  }
-
   @Put('/:id')
-  @UpdateRoute({ name: 'category', duplicated: true, schema: CategorySwagger })
+  @UpdateRoute({
+    name: 'category',
+    duplicated: true,
+    regularField: 'parent category',
+    schema: CategorySwagger,
+  })
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateCategoryDto: UpdateCategoryDto,

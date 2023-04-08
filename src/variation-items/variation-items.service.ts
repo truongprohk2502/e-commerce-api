@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { VariationItemEntity } from './entities/variation-item.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CreateVariationItemDto } from './dto/create-variation-item.dto';
 import { VariationsService } from 'src/variations/variations.service';
 import { UpdateVariationItemDto } from './dto/update-variation-item.dto';
@@ -23,6 +23,10 @@ export class VariationItemsService {
     } catch {
       throw new NotFoundException('Variation item not found');
     }
+  }
+
+  async findByIds(ids: number[]) {
+    return this.variationItemsRepository.findBy({ id: In(ids) });
   }
 
   async create(createVariationItemDto: CreateVariationItemDto) {

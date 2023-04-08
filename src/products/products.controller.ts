@@ -50,6 +50,7 @@ export class ProductsController {
   @Post('/')
   @CreateRoute({
     name: 'product',
+    regularField: 'category',
     schema: ProductSwagger,
   })
   async create(@Body() createProductDto: CreateProductDto) {
@@ -57,7 +58,11 @@ export class ProductsController {
   }
 
   @Put('/:id')
-  @UpdateRoute({ name: 'product', schema: ProductSwagger })
+  @UpdateRoute({
+    name: 'product',
+    regularField: 'category',
+    schema: ProductSwagger,
+  })
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateProductDto: UpdateProductDto,

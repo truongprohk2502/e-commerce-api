@@ -9,10 +9,16 @@ import {
 interface IProps {
   name: string;
   duplicated?: boolean;
+  regularField?: string;
   schema: any;
 }
 
-export function UpdateRoute({ name, duplicated, schema }: IProps) {
+export function UpdateRoute({
+  name,
+  duplicated,
+  regularField,
+  schema,
+}: IProps) {
   const errors = [];
 
   duplicated &&
@@ -27,7 +33,9 @@ export function UpdateRoute({ name, duplicated, schema }: IProps) {
       schema,
     }),
     ApiNotFoundResponse({
-      description: `The ${name} not found`,
+      description: regularField
+        ? `The ${name} or ${regularField} not found`
+        : `The ${name} not found`,
     }),
     ...errors,
   );

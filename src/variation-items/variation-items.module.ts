@@ -9,5 +9,6 @@ import { VariationsModule } from 'src/variations/variations.module';
   imports: [TypeOrmModule.forFeature([VariationItemEntity]), VariationsModule],
   providers: [VariationItemsService],
   controllers: [VariationItemsController],
+  exports: [VariationItemsService],
 })
 export class VariationItemsModule {}

@@ -45,6 +45,7 @@ export class AddressesController {
   @Roles(Role.User)
   @UpdateRoute({
     name: 'address',
+    regularField: 'country',
     schema: AddressSwagger,
   })
   async update(
