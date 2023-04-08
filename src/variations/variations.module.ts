@@ -8,5 +8,6 @@ import { VariationEntity } from './entities/variation.entity';
   imports: [TypeOrmModule.forFeature([VariationEntity])],
   controllers: [VariationsController],
   providers: [VariationsService],
+  exports: [VariationsService],
 })
 export class VariationsModule {}

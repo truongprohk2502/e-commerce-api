@@ -24,7 +24,8 @@ export class AddressesService {
 
   async findByIdOrFail(id: number) {
     try {
-      return this.addressesRepository.findOneByOrFail({ id });
+      const address = await this.addressesRepository.findOneByOrFail({ id });
+      return address;
     } catch {
       throw new NotFoundException('Address not found');
     }

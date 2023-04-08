@@ -18,19 +18,30 @@ export class VariationsService {
 
   async findByIdOrFail(id: number) {
     try {
-      return this.variationsRepository.findOneByOrFail({ id });
+      const variation = await this.variationsRepository.findOneByOrFail({ id });
+      return variation;
     } catch {
       throw new NotFoundException('Variation not found');
     }
   }
 
   async findAll() {
-    return this.variationsRepository.find();
+    return this.variationsRepository.find({ relations: { items: true } });
   }
 
   async create(createVariationDto: CreateVariationDto) {
-    const variation = this.variationsRepository.create(createVariationDto);
-    return this.variationsRepository.save(variation);
+    const deletedVariation = await this.variationsRepository.findOne({
+      where: { name: createVariationDto.name },
+      withDeleted: true,
+    });
+
+    if (deletedVariation) {
+      await this.variationsRepository.restore(deletedVariation.id);
+      return deletedVariation;
+    } else {
+      const variation = this.variationsRepository.create(createVariationDto);
+      return this.variationsRepository.save(variation);
+    }
   }
 
   async update(id: number, updateVariationDto: UpdateVariationDto) {
@@ -45,6 +56,6 @@ export class VariationsService {
   }
 
   async deleteById(id: number) {
-    await this.variationsRepository.delete(id);
+    await this.variationsRepository.softDelete(id);
   }
 }

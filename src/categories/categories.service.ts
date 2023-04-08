@@ -22,7 +22,8 @@ export class CategoriesService {
 
   async findByIdOrFail(id: number) {
     try {
-      return this.categoriesRepository.findOneByOrFail({ id });
+      const category = await this.categoriesRepository.findOneByOrFail({ id });
+      return category;
     } catch {
       throw new NotFoundException('Category not found');
     }

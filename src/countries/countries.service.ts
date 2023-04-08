@@ -22,7 +22,8 @@ export class CountriesService {
 
   async findByIdOrFail(id: number) {
     try {
-      return this.countriesRepository.findOneByOrFail({ id });
+      const country = await this.countriesRepository.findOneByOrFail({ id });
+      return country;
     } catch {
       throw new NotFoundException('Country not found');
     }

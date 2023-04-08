@@ -10,6 +10,7 @@ import { CountriesModule } from './countries/countries.module';
 import { AddressesModule } from './addresses/addresses.module';
 import { CategoriesModule } from './categories/categories.module';
 import { VariationsModule } from './variations/variations.module';
+import { VariationItemsModule } from './variation-items/variation-items.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { VariationsModule } from './variations/variations.module';
     AddressesModule,
     CategoriesModule,
     VariationsModule,
+    VariationItemsModule,
   ],
 })
 export class AppModule {}

@@ -1,5 +1,5 @@
 import { Exclude } from 'class-transformer';
-import { VariationItemEntity } from 'src/variation-items/entities/variation-item.entity';
+import { VariationEntity } from 'src/variations/entities/variation.entity';
 import {
   Entity,
   Column,
@@ -7,22 +7,19 @@ import {
   UpdateDateColumn,
   CreateDateColumn,
   DeleteDateColumn,
-  OneToMany,
+  ManyToOne,
 } from 'typeorm';
 
-@Entity('variations')
-export class VariationEntity {
+@Entity('variation-items')
+export class VariationItemEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ unique: true })
-  name: string;
+  value: string;
 
-  @OneToMany(
-    () => VariationItemEntity,
-    (variationItem) => variationItem.variation,
-  )
-  items: VariationItemEntity[];
+  @ManyToOne(() => VariationEntity, (variations) => variations.items)
+  variation: VariationEntity;
 
   @CreateDateColumn()
   @Exclude()
