@@ -54,7 +54,7 @@ export class AuthService {
       role: Role.User,
     });
 
-    return { token, user_info: createdUser };
+    return { token, userInfo: createdUser };
   }
 
   async login(loginUserDto: LoginUserDto) {
@@ -94,10 +94,10 @@ export class AuthService {
     });
 
     if (existedUser) {
-      return { token, user_info: existedUser };
+      return { token, userInfo: existedUser };
     } else {
       const createdUser = await this.usersService.createGoogle(googleInfo);
-      return { token, user_info: createdUser };
+      return { token, userInfo: createdUser };
     }
   }
 
@@ -119,10 +119,10 @@ export class AuthService {
     });
 
     if (existedUser) {
-      return { token, user_info: existedUser };
+      return { token, userInfo: existedUser };
     } else {
       const createdUser = await this.usersService.createFacebook(facebookInfo);
-      return { token, user_info: createdUser };
+      return { token, userInfo: createdUser };
     }
   }
 }

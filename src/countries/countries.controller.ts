@@ -29,8 +29,8 @@ import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from 'src/common/enums/role.enum';
 
 @Controller('countries')
-// @Roles(Role.Admin)
 @ApiTags('countries')
+@Roles(Role.Admin)
 export class CountriesController {
   constructor(private countriesService: CountriesService) {}
 

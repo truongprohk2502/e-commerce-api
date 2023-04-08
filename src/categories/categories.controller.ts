@@ -21,9 +21,12 @@ import { CategorySwagger } from './swaggers/category.swagger';
 import { CreateCategoryDto } from './dto/create-category';
 import { NestedCategorySwagger } from './swaggers/nested-category.swagger';
 import { UpdateCategoryDto } from './dto/update-category';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { Role } from 'src/common/enums/role.enum';
 
 @Controller('categories')
 @ApiTags('categories')
+@Roles(Role.Admin)
 export class CategoriesController {
   constructor(private categoriesService: CategoriesService) {}
 
