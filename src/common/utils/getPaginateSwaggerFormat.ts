@@ -1,4 +1,4 @@
-export const getPaginateSwaggerFormat = (body: any) => {
+export const getPaginateSwaggerFormat = (schema: any) => {
   return {
     type: 'object',
     properties: {
@@ -19,7 +19,10 @@ export const getPaginateSwaggerFormat = (body: any) => {
           },
         },
       },
-      data: body,
+      data: {
+        type: 'array',
+        items: schema,
+      },
     },
   };
 };

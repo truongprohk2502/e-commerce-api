@@ -8,13 +8,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { AddressesService } from './addresses.service';
-import {
-  ApiBadRequestResponse,
-  ApiCreatedResponse,
-  ApiOkResponse,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { AddressSwagger } from './swaggers/address.swagger';
 import { Roles } from 'src/common/decorators/roles.decorator';
@@ -24,6 +18,9 @@ import {
   IJwtPayload,
   JwtPayload,
 } from 'src/common/decorators/jwt-payload.decorator';
+import { CreateRoute } from 'src/common/decorators/create-route.decorator';
+import { UpdateRoute } from 'src/common/decorators/update-route.decorator';
+import { DeleteRoute } from 'src/common/decorators/delete-route.decorator';
 
 @Controller('addresses')
 @ApiTags('addresses')
@@ -32,12 +29,11 @@ export class AddressesController {
 
   @Post('/')
   @Roles(Role.User)
-  @ApiOperation({ summary: 'Create address' })
-  @ApiCreatedResponse({
-    description: 'Created successfully',
+  @CreateRoute({
+    name: 'address',
+    regularField: 'country',
     schema: AddressSwagger,
   })
-  @ApiBadRequestResponse({ description: 'Country not found' })
   async create(
     @Body() createAddressDto: CreateAddressDto,
     @JwtPayload() payload: IJwtPayload,
@@ -47,12 +43,10 @@ export class AddressesController {
 
   @Patch('/:id')
   @Roles(Role.User)
-  @ApiOperation({ summary: 'Update address' })
-  @ApiOkResponse({
-    description: 'Updated successfully',
+  @UpdateRoute({
+    name: 'address',
     schema: AddressSwagger,
   })
-  @ApiBadRequestResponse({ description: 'Address not found' })
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateAddressDto: UpdateAddressDto,
@@ -63,10 +57,7 @@ export class AddressesController {
 
   @Delete('/:id')
   @Roles(Role.User)
-  @ApiOperation({ summary: 'Delete address by id' })
-  @ApiOkResponse({
-    description: 'Deleted successfully',
-  })
+  @DeleteRoute({ name: 'address' })
   async delete(@Param('id', ParseIntPipe) id: number) {
     return this.addressesService.deleteById(id);
   }

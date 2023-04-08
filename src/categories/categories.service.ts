@@ -20,15 +20,23 @@ export class CategoriesService {
     return this.categoriesTreeRepository.findTrees();
   }
 
+  async findByIdOrFail(id: number) {
+    try {
+      return this.categoriesRepository.findOneByOrFail({ id });
+    } catch {
+      throw new NotFoundException('Category not found');
+    }
+  }
+
   async create(createCategoryDto: CreateCategoryDto) {
     const { parentId } = createCategoryDto;
 
     const category = this.categoriesRepository.create(createCategoryDto);
-    category.parent = parentId
-      ? await this.categoriesRepository.findOneBy({
-          id: parentId,
-        })
-      : null;
+    try {
+      category.parent = parentId ? await this.findByIdOrFail(parentId) : null;
+    } catch {
+      throw new NotFoundException('Parent category not found');
+    }
 
     return this.categoriesRepository.save(category);
   }

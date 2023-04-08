@@ -14,6 +14,18 @@ export class UsersService {
     private usersRepository: Repository<UserEntity>,
   ) {}
 
+  async findByEmail(email: string, accountType?: AccountType) {
+    return this.usersRepository.findOneBy({
+      emailAddress: email,
+      accountType: accountType || AccountType.UsingPassword,
+      isActive: true,
+    });
+  }
+
+  async findById(id: number) {
+    return this.usersRepository.findOneBy({ id });
+  }
+
   async create(createUserDto: CreateUserDto) {
     const user = this.usersRepository.create(createUserDto);
     return this.usersRepository.save(user);
@@ -33,17 +45,5 @@ export class UsersService {
       accountType: AccountType.UsingFacebook,
     });
     return this.usersRepository.save(user);
-  }
-
-  async findByEmail(email: string, accountType?: AccountType) {
-    return this.usersRepository.findOneBy({
-      emailAddress: email,
-      accountType: accountType || AccountType.UsingPassword,
-      isActive: true,
-    });
-  }
-
-  async findById(id: number) {
-    return this.usersRepository.findOneBy({ id });
   }
 }

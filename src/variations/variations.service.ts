@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { VariationEntity } from './entities/variation.entity';
 import { Repository } from 'typeorm';
@@ -17,7 +17,11 @@ export class VariationsService {
   }
 
   async findByIdOrFail(id: number) {
-    return this.variationsRepository.findOneByOrFail({ id });
+    try {
+      return this.variationsRepository.findOneByOrFail({ id });
+    } catch {
+      throw new NotFoundException('Variation not found');
+    }
   }
 
   async findAll() {
@@ -35,7 +39,7 @@ export class VariationsService {
       ...updateVariationDto,
     });
 
-    if (!variation) throw new BadRequestException('Variation not found');
+    if (!variation) throw new NotFoundException('Variation not found');
 
     return this.variationsRepository.save(variation);
   }

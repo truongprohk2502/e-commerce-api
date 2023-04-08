@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CountryEntity } from './entities/country.entity';
 import { Repository } from 'typeorm';
@@ -21,7 +21,11 @@ export class CountriesService {
   }
 
   async findByIdOrFail(id: number) {
-    return this.countriesRepository.findOneByOrFail({ id });
+    try {
+      return this.countriesRepository.findOneByOrFail({ id });
+    } catch {
+      throw new NotFoundException('Country not found');
+    }
   }
 
   async findAll(paginationDto: PaginationDto) {
@@ -53,7 +57,7 @@ export class CountriesService {
       ...updateCountryDto,
     });
 
-    if (!country) throw new BadRequestException('Country not found');
+    if (!country) throw new NotFoundException('Country not found');
 
     return this.countriesRepository.save(country);
   }

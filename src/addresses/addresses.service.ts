@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AddressEntity } from './entities/address.entity';
 import { Repository } from 'typeorm';
@@ -23,17 +23,21 @@ export class AddressesService {
   }
 
   async findByIdOrFail(id: number) {
-    return this.addressesRepository.findOneByOrFail({ id });
+    try {
+      return this.addressesRepository.findOneByOrFail({ id });
+    } catch {
+      throw new NotFoundException('Address not found');
+    }
   }
 
   async create(createAddressDto: CreateAddressDto, payload: IJwtPayload) {
     const country = await this.countriesService.findById(
       createAddressDto.countryId,
     );
-    if (!country) throw new BadRequestException('Country not found');
+    if (!country) throw new NotFoundException('Country not found');
 
     const user = await this.usersService.findById(payload.id);
-    if (!user) throw new BadRequestException('User not found');
+    if (!user) throw new NotFoundException('User not found');
 
     const address = this.addressesRepository.create(createAddressDto);
     address.country = country;
@@ -53,7 +57,7 @@ export class AddressesService {
       user: { id: payload.id },
     });
 
-    if (!address) throw new BadRequestException('Address not found');
+    if (!address) throw new NotFoundException('Address not found');
 
     updateEntity(address, updateAddressDto);
 

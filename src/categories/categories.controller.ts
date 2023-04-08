@@ -9,20 +9,17 @@ import {
   Delete,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
-import {
-  ApiBadRequestResponse,
-  ApiCreatedResponse,
-  ApiNotFoundResponse,
-  ApiOkResponse,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { CategorySwagger } from './swaggers/category.swagger';
 import { CreateCategoryDto } from './dto/create-category';
 import { NestedCategorySwagger } from './swaggers/nested-category.swagger';
 import { UpdateCategoryDto } from './dto/update-category';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { Role } from 'src/common/enums/role.enum';
+import { CreateRoute } from 'src/common/decorators/create-route.decorator';
+import { GetAllRoute } from 'src/common/decorators/get-all.decorator';
+import { UpdateRoute } from 'src/common/decorators/update-route.decorator';
+import { DeleteRoute } from 'src/common/decorators/delete-route.decorator';
 
 @Controller('categories')
 @ApiTags('categories')
@@ -31,36 +28,24 @@ export class CategoriesController {
   constructor(private categoriesService: CategoriesService) {}
 
   @Post('/')
-  @ApiOperation({ summary: 'Create category' })
-  @ApiCreatedResponse({
-    description: 'Created successfully',
+  @CreateRoute({
+    name: 'category',
+    duplicated: true,
+    regularField: 'parent category',
     schema: CategorySwagger,
   })
-  @ApiBadRequestResponse({ description: 'Parent not found' })
   async create(@Body() createCategoryDto: CreateCategoryDto) {
     return this.categoriesService.create(createCategoryDto);
   }
 
   @Get('/')
-  @ApiOperation({ summary: 'Get all categories' })
-  @ApiOkResponse({
-    description: 'Get all successfully',
-    schema: {
-      type: 'array',
-      items: NestedCategorySwagger,
-    },
-  })
+  @GetAllRoute({ name: 'categories', schema: NestedCategorySwagger })
   async getAll() {
     return this.categoriesService.getAll();
   }
 
   @Put('/:id')
-  @ApiOperation({ summary: 'Update category' })
-  @ApiOkResponse({
-    description: 'Updated successfully',
-    schema: CategorySwagger,
-  })
-  @ApiNotFoundResponse({ description: 'Category not found' })
+  @UpdateRoute({ name: 'category', duplicated: true, schema: CategorySwagger })
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateCategoryDto: UpdateCategoryDto,
@@ -69,10 +54,7 @@ export class CategoriesController {
   }
 
   @Delete('/:id')
-  @ApiOperation({ summary: 'Delete category by id' })
-  @ApiOkResponse({
-    description: 'Deleted successfully',
-  })
+  @DeleteRoute({ name: 'category' })
   async delete(@Param('id', ParseIntPipe) id: number) {
     return this.categoriesService.deleteById(id);
   }
