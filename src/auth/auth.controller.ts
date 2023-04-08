@@ -1,11 +1,13 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Get, UseGuards } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
   ApiCreatedResponse,
   ApiNotFoundResponse,
+  ApiOkResponse,
   ApiOperation,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
@@ -13,11 +15,29 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { AuthenticationSwagger } from './swaggers/authentication.swagger';
 import { LoginGoogleDto } from './dto/login-google.dto';
 import { LoginFacebookDto } from './dto/login-facebook.dto';
+import { UserSwagger } from 'src/users/swaggers/user.swagger';
+import {
+  IJwtPayload,
+  JwtPayload,
+} from 'src/common/decorators/jwt-payload.decorator';
+import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller('auth')
 @ApiTags('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
+
+  @Get('/user-info')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Get user info by token' })
+  @ApiOkResponse({
+    description: 'Get user info successfully',
+    schema: UserSwagger,
+  })
+  @ApiUnauthorizedResponse({ description: 'The token is invalid' })
+  async getUserInfo(@JwtPayload() payload: IJwtPayload) {
+    return this.authService.getUserInfo(payload);
+  }
 
   @Post('/register')
   @ApiOperation({ summary: 'Register an user account' })

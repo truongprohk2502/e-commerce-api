@@ -34,6 +34,10 @@ export class AuthService {
     return hash(password, genSaltSync());
   }
 
+  async getUserInfo(payload: IJwtPayload) {
+    return this.usersService.findById(payload.id);
+  }
+
   async register(createUserDto: CreateUserDto) {
     const { password, emailAddress } = createUserDto;
 
