@@ -1,4 +1,5 @@
 import { Exclude } from 'class-transformer';
+import { ProductEntity } from 'src/products/entities/product.entity';
 import {
   Entity,
   Column,
@@ -10,6 +11,7 @@ import {
   Tree,
   TreeParent,
   TreeChildren,
+  OneToMany,
 } from 'typeorm';
 
 @Entity('categories')
@@ -21,6 +23,9 @@ export class CategoryEntity {
   @Column()
   @Index({ unique: true })
   categoryName: string;
+
+  @OneToMany(() => ProductEntity, (product) => product.category)
+  products: ProductEntity[];
 
   @TreeParent()
   @Exclude()

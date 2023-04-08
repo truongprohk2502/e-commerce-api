@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Get, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Get } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
@@ -20,7 +20,7 @@ import {
   IJwtPayload,
   JwtPayload,
 } from 'src/common/decorators/jwt-payload.decorator';
-import { JwtAuthGuard } from './jwt-auth.guard';
+import { UseJwtGuard } from 'src/common/decorators/jwt-guard.decorator';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -28,7 +28,7 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Get('/user-info')
-  @UseGuards(JwtAuthGuard)
+  @UseJwtGuard()
   @ApiOperation({ summary: 'Get user info by token' })
   @ApiOkResponse({
     description: 'Get user info successfully',

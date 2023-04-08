@@ -23,7 +23,7 @@ import { DeleteRoute } from 'src/common/decorators/delete-route.decorator';
 
 @Controller('variations')
 @ApiTags('variations')
-// @Roles(Role.Admin)
+@Roles(Role.Admin)
 export class VariationsController {
   constructor(private variationsService: VariationsService) {}
 

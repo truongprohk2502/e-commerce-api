@@ -9,5 +9,6 @@ import { CategoriesTreeProvider } from './providers/categories-tree-repo.provide
   imports: [TypeOrmModule.forFeature([CategoryEntity])],
   controllers: [CategoriesController],
   providers: [CategoriesService, CategoriesTreeProvider],
+  exports: [CategoriesService],
 })
 export class CategoriesModule {}

@@ -11,6 +11,7 @@ import { AddressesModule } from './addresses/addresses.module';
 import { CategoriesModule } from './categories/categories.module';
 import { VariationsModule } from './variations/variations.module';
 import { VariationItemsModule } from './variation-items/variation-items.module';
+import { ProductsModule } from './products/products.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { VariationItemsModule } from './variation-items/variation-items.module';
     CategoriesModule,
     VariationsModule,
     VariationItemsModule,
+    ProductsModule,
   ],
 })
 export class AppModule {}

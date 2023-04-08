@@ -17,9 +17,12 @@ import { GetByIdRoute } from 'src/common/decorators/get-by-id.decorator';
 import { DeleteRoute } from 'src/common/decorators/delete-route.decorator';
 import { UpdateRoute } from 'src/common/decorators/update-route.decorator';
 import { UpdateVariationItemDto } from './dto/update-variation-item.dto';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { Role } from 'src/common/enums/role.enum';
 
 @Controller('variation-items')
 @ApiTags('variation-items')
+@Roles(Role.Admin)
 export class VariationItemsController {
   constructor(private variationItemsService: VariationItemsService) {}
 
