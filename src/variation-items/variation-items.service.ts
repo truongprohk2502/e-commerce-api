@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { VariationItemEntity } from './entities/variation-item.entity';
-import { In, Repository } from 'typeorm';
+import { In, IsNull, Not, Repository } from 'typeorm';
 import { CreateVariationItemDto } from './dto/create-variation-item.dto';
 import { VariationsService } from 'src/variations/variations.service';
 import { UpdateVariationItemDto } from './dto/update-variation-item.dto';
@@ -28,7 +28,7 @@ export class VariationItemsService {
     const variation = await this.variationsService.findByIdOrFail(variationId);
 
     const deletedVariationItem = await this.variationItemsRepository.findOne({
-      where: { value },
+      where: { value, deletedAt: Not(IsNull()) },
       withDeleted: true,
     });
 

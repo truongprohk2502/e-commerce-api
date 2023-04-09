@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { VariationEntity } from './entities/variation.entity';
-import { Repository } from 'typeorm';
+import { IsNull, Not, Repository } from 'typeorm';
 import { CreateVariationDto } from './dto/create-variation.dto';
 import { UpdateVariationDto } from './dto/update-variation.dto';
 
@@ -26,7 +26,7 @@ export class VariationsService {
 
   async create(createVariationDto: CreateVariationDto) {
     const deletedVariation = await this.variationsRepository.findOne({
-      where: { name: createVariationDto.name },
+      where: { name: createVariationDto.name, deletedAt: Not(IsNull()) },
       withDeleted: true,
     });
 
