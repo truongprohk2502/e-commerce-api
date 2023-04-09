@@ -27,13 +27,25 @@ export class AddressesService {
   }
 
   async create(createAddressDto: CreateAddressDto, payload: IJwtPayload) {
+    const userId = payload.id;
+
     const country = await this.countriesService.findById(
       createAddressDto.countryId,
     );
     if (!country) throw new NotFoundException('Country not found');
 
-    const user = await this.usersService.findById(payload.id);
+    const user = await this.usersService.findById(userId);
     if (!user) throw new NotFoundException('User not found');
+
+    const { isDefault } = createAddressDto;
+    if (isDefault) {
+      const defaultAddress = await this.addressesRepository.findOneBy({
+        user: { id: userId },
+        isDefault: true,
+      });
+      defaultAddress.isDefault = false;
+      await this.addressesRepository.save(defaultAddress);
+    }
 
     const address = this.addressesRepository.create(createAddressDto);
     address.country = country;
@@ -48,12 +60,23 @@ export class AddressesService {
     updateAddressDto: UpdateAddressDto,
     payload: IJwtPayload,
   ) {
+    const userId = payload.id;
     const address = await this.addressesRepository.findOneBy({
       id,
-      user: { id: payload.id },
+      user: { id: userId },
     });
 
     if (!address) throw new NotFoundException('Address not found');
+
+    const { isDefault } = updateAddressDto;
+    if (isDefault) {
+      const defaultAddress = await this.addressesRepository.findOneBy({
+        user: { id: userId },
+        isDefault: true,
+      });
+      defaultAddress.isDefault = false;
+      await this.addressesRepository.save(defaultAddress);
+    }
 
     updateEntity(address, updateAddressDto);
 

@@ -36,6 +36,9 @@ export class AddressEntity {
   @Column()
   postalCode: string;
 
+  @Column({ default: false })
+  isDefault: boolean;
+
   @OneToOne(() => CountryEntity, { eager: true, cascade: true })
   @JoinColumn()
   country: CountryEntity;

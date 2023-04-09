@@ -28,9 +28,8 @@ export class CreateAddressDto {
   postalCode: string;
 
   @IsBoolean()
-  @IsOptional()
   @ApiProperty({ example: true })
-  isDefault?: boolean;
+  isDefault: boolean;
 
   @IsInt()
   @ApiProperty({ example: 1 })
