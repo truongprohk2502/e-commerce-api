@@ -1,5 +1,5 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { Role } from '../enums/role.enum';
+import { Role } from '../../users/enums/role.enum';
 
 export interface IJwtPayload {
   id: number;

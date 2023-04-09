@@ -45,10 +45,7 @@ export class PromotionsService {
       updateProductsPromotionDto.productIds,
     );
 
-    const promotion = await this.promotionsRepository.findOneBy({ id });
-
-    if (!promotion) throw new NotFoundException('Promotion not found');
-
+    const promotion = await this.promotionsRepository.findOneByOrFail({ id });
     promotion.products = products;
 
     return this.promotionsRepository.save(promotion);

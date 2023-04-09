@@ -1,4 +1,5 @@
 import { Exclude } from 'class-transformer';
+import { OrderEntity } from 'src/orders/entities/order.entity';
 import { ProductItemEntity } from 'src/product-items/entities/product-item.entity';
 import { UserEntity } from 'src/users/entities/user.entity';
 import {
@@ -27,6 +28,9 @@ export class CartItemEntity {
     eager: true,
   })
   product: ProductItemEntity;
+
+  @ManyToOne(() => OrderEntity, (order) => order.cartItems)
+  order: OrderEntity;
 
   @CreateDateColumn()
   @Exclude()

@@ -14,7 +14,7 @@ import { VariationSwagger } from './swaggers/variation.swagger';
 import { CreateVariationDto } from './dto/create-variation.dto';
 import { UpdateVariationDto } from './dto/update-variation.dto';
 import { Roles } from 'src/common/decorators/roles.decorator';
-import { Role } from 'src/common/enums/role.enum';
+import { Role } from 'src/users/enums/role.enum';
 import { GetByIdRoute } from 'src/common/decorators/get-by-id.decorator';
 import { GetAllRoute } from 'src/common/decorators/get-all.decorator';
 import { CreateRoute } from 'src/common/decorators/create-route.decorator';

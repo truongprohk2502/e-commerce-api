@@ -23,7 +23,7 @@ import { UpdatePromotionDto } from './dto/update-promotion.dto';
 import { DeleteRoute } from 'src/common/decorators/delete-route.decorator';
 import { UpdateProductsPromotionDto } from './dto/update-products-promotion.dto';
 import { Roles } from 'src/common/decorators/roles.decorator';
-import { Role } from 'src/common/enums/role.enum';
+import { Role } from 'src/users/enums/role.enum';
 
 @Controller('promotions')
 @ApiTags('promotions')

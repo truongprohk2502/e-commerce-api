@@ -4,7 +4,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 import { CartItemEntity } from './entities/cart-item.entity';
 import { IJwtPayload } from 'src/common/decorators/jwt-payload.decorator';
 import { CreateCartItemDto } from './dto/create-cart-item.dto';
@@ -29,9 +29,17 @@ export class CartItemsService {
     });
   }
 
+  async findByIds(ids: number[], userId: number) {
+    return Promise.all(
+      ids.map((id) =>
+        this.cartItemsRepository.findOneByOrFail({ id, user: { id: userId } }),
+      ),
+    );
+  }
+
   async getAllByUser(payload: IJwtPayload) {
     return this.cartItemsRepository.find({
-      where: { user: { id: payload.id } },
+      where: { user: { id: payload.id }, order: { id: IsNull() } },
     });
   }
 
@@ -39,10 +47,7 @@ export class CartItemsService {
     const { productId, ...props } = createCartItemDto;
 
     const product = await this.productItemsService.findByIdOrFail(productId);
-
-    const user = await this.usersService.findById(payload.id);
-
-    if (!user) throw new BadRequestException('Not found user');
+    const user = await this.usersService.findByIdOrFail(payload.id);
 
     const cartItem = this.cartItemsRepository.create({ ...props });
     cartItem.product = product;

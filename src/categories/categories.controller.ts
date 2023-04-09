@@ -15,7 +15,7 @@ import { CreateCategoryDto } from './dto/create-category';
 import { NestedCategorySwagger } from './swaggers/nested-category.swagger';
 import { UpdateCategoryDto } from './dto/update-category';
 import { Roles } from 'src/common/decorators/roles.decorator';
-import { Role } from 'src/common/enums/role.enum';
+import { Role } from 'src/users/enums/role.enum';
 import { CreateRoute } from 'src/common/decorators/create-route.decorator';
 import { GetAllRoute } from 'src/common/decorators/get-all.decorator';
 import { UpdateRoute } from 'src/common/decorators/update-route.decorator';

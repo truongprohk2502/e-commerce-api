@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AddressEntity } from './entities/address.entity';
 import { Repository } from 'typeorm';
@@ -29,13 +29,10 @@ export class AddressesService {
   async create(createAddressDto: CreateAddressDto, payload: IJwtPayload) {
     const userId = payload.id;
 
-    const country = await this.countriesService.findById(
+    const country = await this.countriesService.findByIdOrFail(
       createAddressDto.countryId,
     );
-    if (!country) throw new NotFoundException('Country not found');
-
-    const user = await this.usersService.findById(userId);
-    if (!user) throw new NotFoundException('User not found');
+    const user = await this.usersService.findByIdOrFail(userId);
 
     const { isDefault } = createAddressDto;
     if (isDefault) {
@@ -43,8 +40,10 @@ export class AddressesService {
         user: { id: userId },
         isDefault: true,
       });
-      defaultAddress.isDefault = false;
-      await this.addressesRepository.save(defaultAddress);
+      if (defaultAddress) {
+        defaultAddress.isDefault = false;
+        await this.addressesRepository.save(defaultAddress);
+      }
     }
 
     const address = this.addressesRepository.create(createAddressDto);
@@ -61,12 +60,10 @@ export class AddressesService {
     payload: IJwtPayload,
   ) {
     const userId = payload.id;
-    const address = await this.addressesRepository.findOneBy({
+    const address = await this.addressesRepository.findOneByOrFail({
       id,
       user: { id: userId },
     });
-
-    if (!address) throw new NotFoundException('Address not found');
 
     const { isDefault } = updateAddressDto;
     if (isDefault) {
@@ -74,8 +71,10 @@ export class AddressesService {
         user: { id: userId },
         isDefault: true,
       });
-      defaultAddress.isDefault = false;
-      await this.addressesRepository.save(defaultAddress);
+      if (defaultAddress) {
+        defaultAddress.isDefault = false;
+        await this.addressesRepository.save(defaultAddress);
+      }
     }
 
     updateEntity(address, updateAddressDto);

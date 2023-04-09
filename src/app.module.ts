@@ -15,8 +15,8 @@ import { ProductsModule } from './products/products.module';
 import { ProductItemsModule } from './product-items/product-items.module';
 import { PromotionsModule } from './promotions/promotions.module';
 import { CartItemsModule } from './cart-items/cart-items.module';
-import { OrderStatusesModule } from './order-statuses/order-statuses.module';
 import { ShippingMethodsModule } from './shipping-methods/shipping-methods.module';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -46,8 +46,8 @@ import { ShippingMethodsModule } from './shipping-methods/shipping-methods.modul
     ProductItemsModule,
     PromotionsModule,
     CartItemsModule,
-    OrderStatusesModule,
     ShippingMethodsModule,
+    OrdersModule,
   ],
 })
 export class AppModule {}

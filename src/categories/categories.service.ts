@@ -40,11 +40,10 @@ export class CategoriesService {
   async update(id: number, updateCategoryDto: UpdateCategoryDto) {
     const { parentId } = updateCategoryDto;
 
-    const category = await this.categoriesRepository.findOneBy({
+    const category = await this.categoriesRepository.findOneByOrFail({
       id,
     });
 
-    if (!category) throw new NotFoundException('Category not found');
     category.parent = parentId
       ? await this.categoriesRepository.findOneBy({
           id: parentId,

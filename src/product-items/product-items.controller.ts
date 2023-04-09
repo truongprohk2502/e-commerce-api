@@ -21,7 +21,7 @@ import { UpdateRoute } from 'src/common/decorators/update-route.decorator';
 import { UpdateProductItemDto } from './dto/update-product-item.dto';
 import { DeleteRoute } from 'src/common/decorators/delete-route.decorator';
 import { Roles } from 'src/common/decorators/roles.decorator';
-import { Role } from 'src/common/enums/role.enum';
+import { Role } from 'src/users/enums/role.enum';
 
 @Controller('product-items')
 @ApiTags('product-items')

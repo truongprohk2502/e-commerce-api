@@ -14,5 +14,6 @@ import { UsersModule } from 'src/users/users.module';
   ],
   providers: [CartItemsService],
   controllers: [CartItemsController],
+  exports: [CartItemsService],
 })
 export class CartItemsModule {}

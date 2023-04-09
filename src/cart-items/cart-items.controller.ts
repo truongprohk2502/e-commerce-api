@@ -23,7 +23,7 @@ import {
   IJwtPayload,
   JwtPayload,
 } from 'src/common/decorators/jwt-payload.decorator';
-import { Role } from 'src/common/enums/role.enum';
+import { Role } from 'src/users/enums/role.enum';
 import { Roles } from 'src/common/decorators/roles.decorator';
 
 @Controller('cart-items')

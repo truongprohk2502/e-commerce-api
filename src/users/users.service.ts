@@ -4,7 +4,7 @@ import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { CreateGoogleDto } from './dto/create-google.dto';
-import { AccountType } from 'src/common/enums/account-type.enum';
+import { AccountType } from 'src/users/enums/account-type.enum';
 import { CreateFacebookDto } from './dto/create-facebook.dto';
 
 @Injectable()
@@ -24,6 +24,10 @@ export class UsersService {
 
   async findById(id: number) {
     return this.usersRepository.findOneBy({ id });
+  }
+
+  async findByIdOrFail(id: number) {
+    return this.usersRepository.findOneByOrFail({ id });
   }
 
   async create(createUserDto: CreateUserDto) {

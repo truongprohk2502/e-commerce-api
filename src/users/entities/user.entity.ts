@@ -1,8 +1,9 @@
 import { Exclude } from 'class-transformer';
 import { AddressEntity } from 'src/addresses/entities/address.entity';
 import { CartItemEntity } from 'src/cart-items/entities/cart-item.entity';
-import { AccountType } from 'src/common/enums/account-type.enum';
-import { Role } from 'src/common/enums/role.enum';
+import { AccountType } from 'src/users/enums/account-type.enum';
+import { Role } from 'src/users/enums/role.enum';
+import { OrderEntity } from 'src/orders/entities/order.entity';
 import {
   Entity,
   Column,
@@ -60,6 +61,9 @@ export class UserEntity {
 
   @OneToMany(() => CartItemEntity, (cartItem) => cartItem.user)
   cartItems: CartItemEntity[];
+
+  @OneToMany(() => OrderEntity, (order) => order.user)
+  orders: OrderEntity[];
 
   @CreateDateColumn()
   @Exclude()

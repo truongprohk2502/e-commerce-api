@@ -18,7 +18,7 @@ import { PaginationDto } from 'src/common/pagination.dto';
 import { UpdateCountryDto } from './dto/update-country.dto';
 import { DeleteCountryDto } from './dto/delete-country.dto';
 import { Roles } from 'src/common/decorators/roles.decorator';
-import { Role } from 'src/common/enums/role.enum';
+import { Role } from 'src/users/enums/role.enum';
 import { GetByIdRoute } from 'src/common/decorators/get-by-id.decorator';
 import { UpdateRoute } from 'src/common/decorators/update-route.decorator';
 import { DeleteRoute } from 'src/common/decorators/delete-route.decorator';

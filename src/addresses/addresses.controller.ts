@@ -12,7 +12,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { AddressSwagger } from './swaggers/address.swagger';
 import { Roles } from 'src/common/decorators/roles.decorator';
-import { Role } from 'src/common/enums/role.enum';
+import { Role } from 'src/users/enums/role.enum';
 import { UpdateAddressDto } from './dto/update-address.dto';
 import {
   IJwtPayload,

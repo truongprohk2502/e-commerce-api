@@ -51,10 +51,6 @@ export class VariationItemsService {
   async update(id: number, updateVariationItemDto: UpdateVariationItemDto) {
     const { variationId, ...props } = updateVariationItemDto;
 
-    const variation = await this.variationsService.findById(variationId);
-
-    if (!variation) throw new NotFoundException('Variation not found');
-
     const variationItem = await this.variationItemsRepository.preload({
       id,
       ...props,
@@ -62,6 +58,7 @@ export class VariationItemsService {
 
     if (!variationItem) throw new NotFoundException('Variation item not found');
 
+    const variation = await this.variationsService.findByIdOrFail(variationId);
     variationItem.variation = variation;
 
     return this.variationItemsRepository.save(variationItem);

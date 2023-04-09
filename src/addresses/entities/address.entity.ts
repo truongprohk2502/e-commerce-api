@@ -1,5 +1,6 @@
 import { Exclude } from 'class-transformer';
 import { CountryEntity } from 'src/countries/entities/country.entity';
+import { OrderEntity } from 'src/orders/entities/order.entity';
 import { UserEntity } from 'src/users/entities/user.entity';
 import {
   Entity,
@@ -11,6 +12,7 @@ import {
   OneToOne,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity('addresses')
@@ -46,6 +48,9 @@ export class AddressEntity {
   @ManyToOne(() => UserEntity, (user) => user.addresses)
   @Exclude()
   user: UserEntity;
+
+  @OneToMany(() => OrderEntity, (order) => order.address)
+  orders: OrderEntity[];
 
   @CreateDateColumn()
   @Exclude()
