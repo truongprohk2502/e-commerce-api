@@ -21,12 +21,7 @@ export class CategoriesService {
   }
 
   async findByIdOrFail(id: number) {
-    try {
-      const category = await this.categoriesRepository.findOneByOrFail({ id });
-      return category;
-    } catch {
-      throw new NotFoundException('Category not found');
-    }
+    return this.categoriesRepository.findOneByOrFail({ id });
   }
 
   async create(createCategoryDto: CreateCategoryDto) {

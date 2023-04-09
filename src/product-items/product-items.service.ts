@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { ProductItemEntity } from './entities/product-item.entity';
 import { ProductsService } from 'src/products/products.service';
 import { PaginationDto } from 'src/common/pagination.dto';
@@ -19,12 +19,13 @@ export class ProductItemsService {
   ) {}
 
   async findByIdOrFail(id: number) {
-    try {
-      const product = await this.productItemsRepository.findOneByOrFail({ id });
-      return product;
-    } catch {
-      throw new NotFoundException('Product item not found');
-    }
+    return this.productItemsRepository.findOneByOrFail({ id });
+  }
+
+  async findByIds(ids: number[]) {
+    return Promise.all(
+      ids.map((id) => this.productItemsRepository.findOneByOrFail({ id })),
+    );
   }
 
   async getAll(paginationDto: PaginationDto) {

@@ -14,5 +14,6 @@ import { VariationItemsModule } from 'src/variation-items/variation-items.module
   ],
   controllers: [ProductItemsController],
   providers: [ProductItemsService],
+  exports: [ProductItemsService],
 })
 export class ProductItemsModule {}

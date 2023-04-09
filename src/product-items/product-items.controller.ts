@@ -20,6 +20,8 @@ import { CreateProductItemDto } from './dto/create-product-item.dto';
 import { UpdateRoute } from 'src/common/decorators/update-route.decorator';
 import { UpdateProductItemDto } from './dto/update-product-item.dto';
 import { DeleteRoute } from 'src/common/decorators/delete-route.decorator';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { Role } from 'src/common/enums/role.enum';
 
 @Controller('product-items')
 @ApiTags('product-items')
@@ -43,6 +45,7 @@ export class ProductItemsController {
   }
 
   @Post('/')
+  @Roles(Role.Admin)
   @CreateRoute({
     name: 'product item',
     regularField: 'product',
@@ -53,6 +56,7 @@ export class ProductItemsController {
   }
 
   @Patch('/:id')
+  @Roles(Role.Admin)
   @UpdateRoute({
     name: 'product',
     regularField: 'product',
@@ -66,6 +70,7 @@ export class ProductItemsController {
   }
 
   @Delete('/:id')
+  @Roles(Role.Admin)
   @DeleteRoute({ name: 'product' })
   async delete(@Param('id', ParseIntPipe) id: number) {
     return this.productItemsService.deleteById(id);

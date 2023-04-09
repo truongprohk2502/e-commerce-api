@@ -23,12 +23,7 @@ export class AddressesService {
   }
 
   async findByIdOrFail(id: number) {
-    try {
-      const address = await this.addressesRepository.findOneByOrFail({ id });
-      return address;
-    } catch {
-      throw new NotFoundException('Address not found');
-    }
+    return this.addressesRepository.findOneByOrFail({ id });
   }
 
   async create(createAddressDto: CreateAddressDto, payload: IJwtPayload) {

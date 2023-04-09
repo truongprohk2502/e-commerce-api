@@ -13,6 +13,7 @@ import { VariationsModule } from './variations/variations.module';
 import { VariationItemsModule } from './variation-items/variation-items.module';
 import { ProductsModule } from './products/products.module';
 import { ProductItemsModule } from './product-items/product-items.module';
+import { PromotionsModule } from './promotions/promotions.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { ProductItemsModule } from './product-items/product-items.module';
     VariationItemsModule,
     ProductsModule,
     ProductItemsModule,
+    PromotionsModule,
   ],
 })
 export class AppModule {}

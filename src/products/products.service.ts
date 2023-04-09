@@ -17,12 +17,7 @@ export class ProductsService {
   ) {}
 
   async findByIdOrFail(id: number) {
-    try {
-      const product = await this.productsRepository.findOneByOrFail({ id });
-      return product;
-    } catch {
-      throw new NotFoundException('Product not found');
-    }
+    return this.productsRepository.findOneByOrFail({ id });
   }
 
   async getAll(paginationDto: PaginationDto) {

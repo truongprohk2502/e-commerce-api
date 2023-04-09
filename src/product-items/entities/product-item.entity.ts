@@ -1,5 +1,6 @@
 import { Exclude } from 'class-transformer';
 import { ProductEntity } from 'src/products/entities/product.entity';
+import { PromotionEntity } from 'src/promotions/entities/promotion.entity';
 import { VariationItemEntity } from 'src/variation-items/entities/variation-item.entity';
 import {
   Entity,
@@ -32,6 +33,11 @@ export class ProductItemEntity {
 
   @ManyToOne(() => ProductEntity, (product) => product.items, { eager: true })
   product: ProductEntity;
+
+  @ManyToOne(() => PromotionEntity, (promotion) => promotion.products, {
+    eager: true,
+  })
+  promotion: PromotionEntity;
 
   @ManyToMany(() => VariationItemEntity, { eager: true })
   @JoinTable()

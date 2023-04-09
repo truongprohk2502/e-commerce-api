@@ -15,14 +15,7 @@ export class VariationItemsService {
   ) {}
 
   async findByIdOrFail(id: number) {
-    try {
-      const variationItem = await this.variationItemsRepository.findOneByOrFail(
-        { id },
-      );
-      return variationItem;
-    } catch {
-      throw new NotFoundException('Variation item not found');
-    }
+    return this.variationItemsRepository.findOneByOrFail({ id });
   }
 
   async findByIds(ids: number[]) {

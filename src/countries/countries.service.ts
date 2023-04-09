@@ -21,12 +21,7 @@ export class CountriesService {
   }
 
   async findByIdOrFail(id: number) {
-    try {
-      const country = await this.countriesRepository.findOneByOrFail({ id });
-      return country;
-    } catch {
-      throw new NotFoundException('Country not found');
-    }
+    return this.countriesRepository.findOneByOrFail({ id });
   }
 
   async findAll(paginationDto: PaginationDto) {
