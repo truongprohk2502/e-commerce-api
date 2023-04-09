@@ -20,7 +20,7 @@ export class VariationsService {
     return this.variationsRepository.findOneByOrFail({ id });
   }
 
-  async findAll() {
+  async getAll() {
     return this.variationsRepository.find({ relations: { items: true } });
   }
 

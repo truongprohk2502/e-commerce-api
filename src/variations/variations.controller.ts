@@ -36,7 +36,7 @@ export class VariationsController {
   @Get('/')
   @GetAllRoute({ name: 'variations', schema: VariationSwagger })
   async findAll() {
-    return this.variationsService.findAll();
+    return this.variationsService.getAll();
   }
 
   @Post('/')

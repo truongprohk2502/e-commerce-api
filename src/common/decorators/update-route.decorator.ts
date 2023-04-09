@@ -1,6 +1,7 @@
 import { applyDecorators } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -9,6 +10,7 @@ import {
 interface IProps {
   name: string;
   duplicated?: boolean;
+  forbidden?: boolean;
   regularField?: string;
   schema: any;
 }
@@ -16,6 +18,7 @@ interface IProps {
 export function UpdateRoute({
   name,
   duplicated,
+  forbidden,
   regularField,
   schema,
 }: IProps) {
@@ -25,6 +28,8 @@ export function UpdateRoute({
     errors.push(
       ApiBadRequestResponse({ description: `The ${name} is duplicated` }),
     );
+  forbidden &&
+    errors.push(ApiForbiddenResponse({ description: 'User forbidden' }));
 
   return applyDecorators(
     ApiOperation({ summary: `Update a ${name}` }),

@@ -1,12 +1,17 @@
 import { applyDecorators } from '@nestjs/common';
-import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
+import {
+  ApiForbiddenResponse,
+  ApiOkResponse,
+  ApiOperation,
+} from '@nestjs/swagger';
 
 interface IProps {
   name: string;
   multiple?: boolean;
+  forbidden?: boolean;
 }
 
-export function DeleteRoute({ name, multiple }: IProps) {
+export function DeleteRoute({ name, multiple, forbidden }: IProps) {
   return applyDecorators(
     ApiOperation({
       summary: multiple ? `Delete multiple ${name}` : `Delete a ${name} by id`,
@@ -14,5 +19,8 @@ export function DeleteRoute({ name, multiple }: IProps) {
     ApiOkResponse({
       description: `Deleted ${name} successfully`,
     }),
+    ...(forbidden
+      ? [ApiForbiddenResponse({ description: 'User forbidden' })]
+      : []),
   );
 }

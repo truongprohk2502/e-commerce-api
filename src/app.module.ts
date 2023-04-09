@@ -14,6 +14,7 @@ import { VariationItemsModule } from './variation-items/variation-items.module';
 import { ProductsModule } from './products/products.module';
 import { ProductItemsModule } from './product-items/product-items.module';
 import { PromotionsModule } from './promotions/promotions.module';
+import { CartItemsModule } from './cart-items/cart-items.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { PromotionsModule } from './promotions/promotions.module';
     ProductsModule,
     ProductItemsModule,
     PromotionsModule,
+    CartItemsModule,
   ],
 })
 export class AppModule {}

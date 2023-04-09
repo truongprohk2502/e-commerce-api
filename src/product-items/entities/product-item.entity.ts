@@ -1,4 +1,5 @@
 import { Exclude } from 'class-transformer';
+import { CartItemEntity } from 'src/cart-items/entities/cart-item.entity';
 import { ProductEntity } from 'src/products/entities/product.entity';
 import { PromotionEntity } from 'src/promotions/entities/promotion.entity';
 import { VariationItemEntity } from 'src/variation-items/entities/variation-item.entity';
@@ -12,6 +13,7 @@ import {
   ManyToOne,
   ManyToMany,
   JoinTable,
+  OneToMany,
 } from 'typeorm';
 
 @Entity('product-items')
@@ -42,6 +44,9 @@ export class ProductItemEntity {
   @ManyToMany(() => VariationItemEntity, { eager: true })
   @JoinTable()
   variations: VariationItemEntity[];
+
+  @OneToMany(() => CartItemEntity, (cartItem) => cartItem.product)
+  cartItems: CartItemEntity[];
 
   @CreateDateColumn()
   @Exclude()
