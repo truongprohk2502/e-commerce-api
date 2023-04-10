@@ -36,6 +36,12 @@ export class ReviewsService {
     return getPaginateResponseData(paginationDto, ...response);
   }
 
+  async getAverageReview(productId: number) {
+    return this.reviewsRepository.average('rating', {
+      cartItem: { product: { id: productId } },
+    });
+  }
+
   async create(createReviewDto: CreateReviewDto, payload: IJwtPayload) {
     const userId = payload.id;
     const { cartItemId, ...props } = createReviewDto;

@@ -18,6 +18,7 @@ import { CartItemsModule } from './cart-items/cart-items.module';
 import { ShippingMethodsModule } from './shipping-methods/shipping-methods.module';
 import { OrdersModule } from './orders/orders.module';
 import { ReviewsModule } from './reviews/reviews.module';
+import { UploadsModule } from './uploads/uploads.module';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { ReviewsModule } from './reviews/reviews.module';
     ShippingMethodsModule,
     OrdersModule,
     ReviewsModule,
+    UploadsModule,
   ],
 })
 export class AppModule {}

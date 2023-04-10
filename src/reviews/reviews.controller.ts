@@ -41,6 +41,18 @@ export class ReviewsController {
     return this.reviewsService.getProductReviews(id, paginationDto);
   }
 
+  @Get('/product/average/:id')
+  @GetAllRoute({
+    name: 'average rating of reviews',
+    schema: {
+      type: 'number',
+      example: 4.5,
+    },
+  })
+  async getAverageReviews(@Param('id', ParseIntPipe) id: number) {
+    return this.reviewsService.getAverageReview(id);
+  }
+
   @Post('/')
   @UseJwtGuard()
   @CreateRoute({
