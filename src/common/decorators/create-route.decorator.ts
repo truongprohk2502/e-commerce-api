@@ -2,6 +2,7 @@ import { applyDecorators } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
+  ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOperation,
 } from '@nestjs/swagger';
@@ -10,6 +11,7 @@ interface IProps {
   name: string;
   duplicated?: boolean;
   multiple?: boolean;
+  forbidden?: boolean;
   regularField?: string;
   schema: any;
 }
@@ -18,6 +20,7 @@ export function CreateRoute({
   name,
   duplicated,
   multiple,
+  forbidden,
   regularField,
   schema,
 }: IProps) {
@@ -29,6 +32,8 @@ export function CreateRoute({
     errors.push(
       ApiNotFoundResponse({ description: `The ${regularField} not found` }),
     );
+  forbidden &&
+    errors.push(ApiForbiddenResponse({ description: 'User forbidden' }));
 
   return applyDecorators(
     ApiOperation({

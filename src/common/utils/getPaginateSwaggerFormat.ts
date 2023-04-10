@@ -2,7 +2,7 @@ export const getPaginateSwaggerFormat = (schema: any) => {
   return {
     type: 'object',
     properties: {
-      meta_data: {
+      metaData: {
         type: 'object',
         properties: {
           page: {

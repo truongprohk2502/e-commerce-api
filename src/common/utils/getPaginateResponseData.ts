@@ -7,7 +7,7 @@ export const getPaginateResponseData = (
 ) => {
   const { page, limit } = paginationDto;
   return {
-    meta_data: {
+    metaData: {
       page,
       limit,
       total,

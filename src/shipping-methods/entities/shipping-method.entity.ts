@@ -1,4 +1,5 @@
 import { Exclude } from 'class-transformer';
+import { OrderEntity } from 'src/orders/entities/order.entity';
 import {
   Entity,
   Column,
@@ -6,6 +7,7 @@ import {
   UpdateDateColumn,
   CreateDateColumn,
   DeleteDateColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity('shipping-methods')
@@ -18,6 +20,9 @@ export class ShippingMethodEntity {
 
   @Column()
   price: number;
+
+  @OneToMany(() => OrderEntity, (order) => order.shippingMethod)
+  orders: OrderEntity[];
 
   @CreateDateColumn()
   @Exclude()

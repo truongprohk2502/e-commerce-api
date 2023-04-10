@@ -1,6 +1,7 @@
 import { Exclude } from 'class-transformer';
 import { OrderEntity } from 'src/orders/entities/order.entity';
 import { ProductItemEntity } from 'src/product-items/entities/product-item.entity';
+import { ReviewEntity } from 'src/reviews/entities/review.entity';
 import { UserEntity } from 'src/users/entities/user.entity';
 import {
   Entity,
@@ -10,6 +11,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 
 @Entity('cart-items')
@@ -31,6 +33,9 @@ export class CartItemEntity {
 
   @ManyToOne(() => OrderEntity, (order) => order.cartItems)
   order: OrderEntity;
+
+  @OneToMany(() => ReviewEntity, (review) => review.cartItem)
+  reviews: ReviewEntity[];
 
   @CreateDateColumn()
   @Exclude()

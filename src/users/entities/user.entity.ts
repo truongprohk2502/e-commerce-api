@@ -14,6 +14,7 @@ import {
   Index,
   OneToMany,
 } from 'typeorm';
+import { ReviewEntity } from 'src/reviews/entities/review.entity';
 
 @Entity('users')
 export class UserEntity {
@@ -64,6 +65,9 @@ export class UserEntity {
 
   @OneToMany(() => OrderEntity, (order) => order.user)
   orders: OrderEntity[];
+
+  @OneToMany(() => ReviewEntity, (review) => review.user)
+  reviews: ReviewEntity[];
 
   @CreateDateColumn()
   @Exclude()

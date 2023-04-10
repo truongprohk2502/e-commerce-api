@@ -4,7 +4,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { IsNull, Repository } from 'typeorm';
+import { IsNull, Not, Repository } from 'typeorm';
 import { CartItemEntity } from './entities/cart-item.entity';
 import { IJwtPayload } from 'src/common/decorators/jwt-payload.decorator';
 import { CreateCartItemDto } from './dto/create-cart-item.dto';
@@ -25,6 +25,13 @@ export class CartItemsService {
   async findByIdOrFail(id: number) {
     return this.cartItemsRepository.findOneOrFail({
       where: { id },
+      relations: ['user'],
+    });
+  }
+
+  async findOrderedByIdOrFail(id: number) {
+    return this.cartItemsRepository.findOneOrFail({
+      where: { id, order: { id: Not(IsNull()) } },
       relations: ['user'],
     });
   }

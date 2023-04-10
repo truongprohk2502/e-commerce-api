@@ -13,6 +13,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { OrderStatus } from '../enums/order-status.enum';
+import { ShippingMethodEntity } from 'src/shipping-methods/entities/shipping-method.entity';
 
 @Entity('orders')
 export class OrderEntity {
@@ -31,6 +32,9 @@ export class OrderEntity {
 
   @ManyToOne(() => AddressEntity, (address) => address.orders)
   address: AddressEntity;
+
+  @ManyToOne(() => ShippingMethodEntity, (method) => method.orders)
+  shippingMethod: ShippingMethodEntity;
 
   @OneToMany(() => CartItemEntity, (cartItem) => cartItem.order)
   cartItems: CartItemEntity[];

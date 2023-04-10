@@ -27,7 +27,7 @@ export class OrdersController {
   @UseJwtGuard()
   @CreateRoute({
     name: 'order',
-    regularField: 'address | cart item',
+    regularField: 'address | shipping method | cart item',
     schema: OrderSwagger,
   })
   async create(
